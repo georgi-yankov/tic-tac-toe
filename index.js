@@ -42,7 +42,7 @@ class Game extends React.Component {
         lastLocation: null
       }],
       stepNumber: 0,
-      xIsNext: true,      
+      xIsNext: true,
     };
   }
 
@@ -84,7 +84,9 @@ class Game extends React.Component {
         'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>          
+          <button className={this.state.stepNumber === move ? 'selected-move' : ''} onClick={() => this.jumpTo(move)}>
+            {desc}
+          </button>          
         </li>
       );
     });
