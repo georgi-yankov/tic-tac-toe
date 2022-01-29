@@ -39,9 +39,10 @@ class Game extends React.Component {
     this.state = {
       history: [{
         squares: Array(9).fill(null),
+        lastLocation: null
       }],
       stepNumber: 0,
-      xIsNext: true,
+      xIsNext: true,      
     };
   }
 
@@ -58,9 +59,10 @@ class Game extends React.Component {
     this.setState({
       history: history.concat([{
         squares: squares,
+        lastLocation: i
       }]),
       stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
+      xIsNext: !this.state.xIsNext,      
     });
   }
 
@@ -78,11 +80,11 @@ class Game extends React.Component {
 
     const moves = history.map((step, move) => {
       const desc = move ?
-        'Go to move #' + move :
+        'Go to move #' + move + ' - ' + getLastLocation(history[move].lastLocation) :
         'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button onClick={() => this.jumpTo(move)}>{desc}</button>          
         </li>
       );
     });
@@ -137,4 +139,21 @@ function calculateWinner(squares) {
     }
   }
   return null;
+}
+
+// 1. Display the location for each move in the format (col, row)
+// in the move history list.
+function getLastLocation(move) {
+  const MOVES = {
+    0: '(1, 1)',
+    1: '(2, 1)',
+    2: '(3, 1)',
+    3: '(1, 2)',
+    4: '(2, 2)',
+    5: '(3, 2)',
+    6: '(1, 3)',
+    7: '(2, 3)',
+    8: '(3, 3)'
+  };
+  return MOVES[move];
 }
